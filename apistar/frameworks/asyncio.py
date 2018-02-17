@@ -3,7 +3,7 @@ import typing
 from apistar import commands, exceptions, hooks, http
 from apistar.components import (
     commandline, console, dependency, router, schema, sessions, statics,
-    templates, umi
+    templates, umi, AsyncioEventLoop, get_event_loop
 )
 from apistar.core import Command, Component
 from apistar.frameworks.cli import CliApp
@@ -31,6 +31,7 @@ class ASyncIOApp(CliApp):
         Component(Router, init=router.WerkzeugRouter),
         Component(CommandLineClient, init=commandline.ArgParseCommandLineClient),
         Component(Console, init=console.PrintConsole),
+        Component(AsyncioEventLoop, init=get_event_loop, preload=False),
         Component(SessionStore, init=sessions.LocalMemorySessionStore),
     ]
 
